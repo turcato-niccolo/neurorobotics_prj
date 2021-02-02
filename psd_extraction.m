@@ -1,3 +1,9 @@
+function [data] = psd_extraction(signal, header)
+%PSD_EXTRACTION: creates a psd matrix from given data
+%   Spatial filters: CAR and Laplacian
+%   Detailed explanation goes here
+%   Turcato Niccolo'
+
 channelLb  = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
 channelId  = 1:length(channelLb);
 classId    = [773 771];   
@@ -13,13 +19,8 @@ wshift     = 0.0625;
 selfreqs   = 4:2:96;
 winconv = 'backward'; 
 
-function [data] = psd_extraction(signal, header)
-%PSD_EXTRACTION: creates a psd matrix from given data
-%   Spatial filters: CAR and Laplacian
-%   Detailed explanation goes here
-%   Turcato Niccolo'
-
 s = signal(:, channelId);
+h = header;
 SampleRate = header.SampleRate;
 
 %% Spatial filters
@@ -49,7 +50,6 @@ end
 events.conversion = winconv;
 
 %% SAVING DATA -> feature extraction
-
 data = struct;
 data.psd = P;
 data.events = events;
