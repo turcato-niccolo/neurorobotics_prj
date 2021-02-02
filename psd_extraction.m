@@ -1,6 +1,18 @@
 function [data] = psd_extraction(signal, header)
 %PSD_EXTRACTION: creates a psd matrix from given data
 %   Spatial filters: CAR and Laplacian
+%
+%   Input arguments:
+%   -signal:    EEG raw signal
+%   -header:    EEG data header
+%
+%   Output arguments:
+%   -data
+%       +data.psd:          3-dim matrix containing PSD data from input EEG
+%       +data.events:       Events from EEG header
+%       +data.freqs:        Selected frequencies
+%       +data.SampleRate:   SampleRate
+%
 
 channelLb  = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
 channelId  = 1:length(channelLb);
