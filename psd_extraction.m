@@ -73,4 +73,3 @@ data.freqs = freqs;
 data.SampleRate = SampleRate;
 
 end
-
