@@ -15,7 +15,7 @@ data_path = './data/';
 %sub-band of frequencies of psd we are interested in
 selected_frequences = (4:2:48)';
 num_features = 5;
-features_filter = load('features_filter.mat').features_filter;
+features_filter = load('features_filter.mat').features_filter';
 
 %% load EEG
 disp('[io] + loading EEG files');
@@ -62,7 +62,7 @@ for psd_i = 1 : length(PSD_data)
 end
 %% convert PSDs into dataset for the classifiers
 
-[X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run] = psd2features(PSD_data, num_features ,features_filter);
+[X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run] = psd2features(PSD_data, num_features, features_filter);
 
 %% compute mean fisher's score
 
@@ -70,7 +70,7 @@ mean_fisher_score = mean(fisher_score_run,3);
 
 %% filter mean fisher's score
 
-filtered_mean_Fisher = mean_fisher_score .* features_filter';
+filtered_mean_Fisher = mean_fisher_score .* features_filter;
 
 %% generate map of selected features
 

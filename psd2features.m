@@ -50,7 +50,7 @@ if ~exist('feature_weights','var')
     % third parameter does not exist, so default it to something
     feature_weights = ones(size(mean_fisher_score));
 end
-filtered_mean_fisher = mean_fisher_score .* feature_weights';
+filtered_mean_fisher = mean_fisher_score .* feature_weights;
 selected_freq_chan_index = bestFeatures(filtered_mean_fisher, num_features);
 
 %% Features extraction
