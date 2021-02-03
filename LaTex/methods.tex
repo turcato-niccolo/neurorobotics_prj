@@ -1,0 +1,26 @@
+\section{Methods}
+The implemented methodology follows the BCI literature. \\
+Work is divided in two main tasks for each subject: creation and calibration of a classifier based on "offline" data, classification of "online" data (serving also as a test). \\
+\newpage
+
+{\Large \textbf{Offline task:}}
+
+\begin{itemize}
+\item \textbf{Data Analysis:} The provided data is in the form of raw EEG [samples x channels], and since in this state it is not useful for classifications, we used the  procedure described in class to compute the corresponding PSD [windows x frequencies x channels].\\
+Before applying the actual PSD procedure, the EEG data is first filtered with a laplacian filter [channels x channels] (insert image).\\
+Lastly, the PSD is polished by applying a moving average (1s window). \\
+Of course, each window is associated with an event.
+\item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the discriminant features are selected, each feature is in the form [frequency x channel] (or Channel@Freq). In this step, channels are selected only if they are meaningful for MI tasks [...]. \\
+\item \textbf{Classifier training:} The previous steps allow to build a training set for each subject (one can use all the available offline data), by selecting the windows associated with the MI tasks. Then for each subject we applied cross validation to choose between three differt kind of classificators (LDA, QDA, SVM with rbf kernel).\\
+At the end of this step, for each subject we have a trained classifier, that takes in input the selected features from a spectogram (one for each channel/electrode) computed on a window of EEG signal, and returns in output the label of the MI task that it recognizes. \\
+\end{itemize}
+
+\noindent
+{\Large\textbf{Online task:}}
+
+\begin{itemize}
+\item \textbf{Feature extraction:} Given a \textbf{single} window of EEG signal of a patient, we analyze it (as described before) and extract the features of interest for said patient (determined in a previous step). \\
+Anyways, for the sake of the simulation, one can also compute the PSD and extract features on the entire online data
+\item \textbf{Classification:} Once we have extracted the features, the classifier trained for the current patient is used to estimate the performed task, with a certain confidence value. \\
+At last, we can evaluate the performance of the system with single-sample accuracy and after evidence accumulation (grand average over a single patient, and grand-grand average on all the patients).
+\end{itemize}
