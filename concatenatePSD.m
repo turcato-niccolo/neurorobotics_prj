@@ -13,9 +13,9 @@ function [PSD_concatenated, EVENT_concatenated, run_labels, modality_labels, sam
 %   - EVENT_concatenated    EVENT structure containing (POS, DUR, FIN, TYP) info about all
 %   events in the concatenated PSD
 %   - run_labels            assigns a label with the run index to all
-%   window of the concatenated PSD
+%   windows of the concatenated PSD
 %   - modality_labels       assigns a label with the modality index to all
-%   window of the concatenated PSD
+%   windows of the concatenated PSD
 %   - sample_rate           sample rate of the PSD
 %   - freqs                 frequences dimension of the PSD
 
