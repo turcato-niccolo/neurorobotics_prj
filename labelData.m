@@ -22,12 +22,10 @@ code.feedback = 781;
 feedback_event.index = (EVENT.TYP == code.feedback);
 feedback_event.POS = EVENT.POS(feedback_event.index);
 feedback_event.DUR = EVENT.DUR(feedback_event.index);
-feedback_event.FIN = EVENT.FIN(feedback_event.index);
 
 %we can have three types of cue (both hand, both feet, rest)
 cue_event.index = ((EVENT.TYP == code.cue_BF) | (EVENT.TYP == code.cue_BH) | (EVENT.TYP == code.cue_rest));
 cue_event.POS = EVENT.POS(cue_event.index);
-cue_event.FIN = EVENT.FIN(cue_event.index);
 cue_event.DUR = EVENT.DUR(cue_event.index);
 cue_event.TYP = EVENT.TYP(cue_event.index);
 
@@ -42,7 +40,7 @@ trial_labels = zeros(num_windows, 1);
 
 for trial_i = 1:num_trials
     start = cue_event.POS(trial_i);
-    stop  = feedback_event.FIN(trial_i);
+    stop  = feedback_event.POS(trial_i) + feedback_event.DUR(trial_i) - 1;
     cue_type_labels(start:stop) = cue_event.TYP(trial_i);
     trial_labels(start:stop) = trial_i;
 end

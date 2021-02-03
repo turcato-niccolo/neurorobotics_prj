@@ -6,7 +6,7 @@ function [PSD_concatenated, EVENT_concatenated, run_labels, modality_labels, sam
 % Input arguments:
 %   - PSD_data              cell array with data structure of the psd
 %   inside [windows x frequences x channels]
-%   data structure accepred [EVENT.(POS,TYP,DUR,FIN), freqs, modality, SampleRate, PSD]
+%   data structure accepred [EVENT.(POS,TYP,DUR), frequences, modality, sample_rate, PSD]
 %
 % Output arguments:
 %   - PSD_concatenated      matrix concatenation of all PSD
@@ -29,11 +29,11 @@ PSD_concatenated = [] ;
 sample_rate = nan;
 freqs = nan;
 
-for i = 1 : length(PSD_data)
+for run_i = 1 : length(PSD_data)
     
-    data = PSD_data{i};
-    sample_rate = data.SampleRate;
-    freqs = data.freqs;
+    data = PSD_data{run_i};
+    sample_rate = data.sample_rate;
+    freqs = data.frequences;
     modality = data.modality;
     
     %save reference to the relative zero position
@@ -46,14 +46,13 @@ for i = 1 : length(PSD_data)
     PSD_concatenated = cat(1, PSD_concatenated, data.PSD);
     %globaly dependent data
     EVENT_concatenated.POS = cat(1, EVENT_concatenated.POS, data.EVENT.POS + zero_reference);
-    EVENT_concatenated.FIN = cat(1, EVENT_concatenated.FIN, data.EVENT.FIN + zero_reference);
     
     %windows indexed vectors
     num_windows = size(data.PSD, 1);
     
-    run_labels = cat(1, run_labels, i*ones(num_windows, 1));
+    run_labels = cat(1, run_labels, run_i * ones(num_windows, 1));
     
-    modality_labels = cat(1, modality_labels, modality*ones(num_windows, 1));
+    modality_labels = cat(1, modality_labels, modality * ones(num_windows, 1));
     
 end
 end
