@@ -1,4 +1,4 @@
-function [X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run, freqs, sample_rate] = psd2features(PSD_data, selected_frequences, num_features ,feature_weights)
+function [X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run] = psd2features(PSD_data, num_features ,feature_weights)
 %[X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run, freqs] = psd2features(PSD_data, selected_frequences, num_features ,feature_weights)
 %   The function extracts the data to be used to train the models
 %
@@ -22,14 +22,7 @@ code.cue_rest = 783;
 code.feedback = 781;
 
 %% concatenate files
-[PSD, EVENT, run_labels, modality_labels, sample_rate, freqs] = concatenatePSD(PSD_data);
-
-%% log and sub-frequences extraction
-%psd is windows x freq x channels
-%extract selected subfrequences
-[PSD,freqs] = extractFrequences(PSD, freqs, selected_frequences);
-%apply log to normalize the distribution
-PSD = log(PSD);
+[PSD, EVENT, run_labels, modality_labels] = concatenatePSD(PSD_data);
 
 %% masks to extract desired data from psd
 num_windows  = size(PSD, 1);

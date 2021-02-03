@@ -48,9 +48,21 @@ for eeg_i = 1 : length(EEG_data)
     PSD_data{eeg_i}.modality = modality;
 end
 
+%% log and sub-frequences extraction
+freqs = nan;
+%psd is windows x freq x channels
+for psd_i = 1 : length(PSD_data)
+    PSD = PSD_data{psd_i}.PSD;
+    %apply log to normalize the distribution
+    PSD = log(PSD);
+    original_frequences = PSD_data{psd_i}.frequences;
+    %extract selected subfrequences
+    [PSD_data{psd_i}.PSD, PSD_data{psd_i}.frequences] = extractFrequences(PSD, original_frequences, selected_frequences);
+    freqs = PSD_data{psd_i}.frequences;
+end
 %% convert PSDs into dataset for the classifiers
 
-[X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run, freqs, sample_rate] = psd2features(PSD_data, selected_frequences, num_features ,features_filter)
+[X, cue_type_labels, trial_labels, modality_labels, selected_freq_chan_index , fisher_score_run] = psd2features(PSD_data, num_features ,features_filter);
 
 %% compute mean fisher's score
 
