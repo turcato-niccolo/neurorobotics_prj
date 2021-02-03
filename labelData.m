@@ -1,7 +1,7 @@
 function [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
 % [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
 % The function returns the labelling vectors traslating event indexing
-% to windows indexing for (TYP,trial) information of the PSD
+% to window indexing for (TYP,trial) information of the PSD
 %
 % Input arguments:
 %   - EVENT                 structure with the following fields
@@ -9,9 +9,9 @@ function [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
 %
 % Output arguments:
 %   - cue_type_labels       labelling vector for the type of event the
-%   windows is assigned to
+%   window is assigned to
 %   - trial_labels          labelling vector for the trial number the
-%   windows is assigned to
+%   window is assigned to
 
 code.fixation = 786;
 code.cue_BH = 773;

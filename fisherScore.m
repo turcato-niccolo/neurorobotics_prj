@@ -6,10 +6,10 @@ function [fisher_scores] = fisherScore(PSD, run_labels, type_labels, run_codes, 
 %
 % Input arguments:
 %   - PSD                   PSD matrix [windows x frequences x channels]
-%   - run_labels            labelling vector (windows indexed) containing info on the run the
-% windows is assigned to
-%   - type_labels           labelling vector (windows indexed) containing info on the type of
-% task the windows is assigned to
+%   - run_labels            labelling vector (window indexed) containing info on the run the
+% window is assigned to
+%   - type_labels           labelling vector (window indexed) containing info on the type of
+% task the window is assigned to
 %   - run_codes             codes of the runs used in run_labels
 %   - class_codes           class of tasks used in type_labels
 %
