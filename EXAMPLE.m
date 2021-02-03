@@ -36,7 +36,7 @@ for eeg_i = 1 : length(EEG_data)
     signal = EEG_data{eeg_i}.signal;
     header = EEG_data{eeg_i}.header;
     PSD_data{eeg_i} = psd_extraction(signal, header);
-    
+    %adding modality info
     modality = nan ;
     if contains(files{eeg_i},"offline")
         modality = 0;
