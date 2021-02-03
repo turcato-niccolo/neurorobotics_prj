@@ -1,4 +1,4 @@
-function [best_model] = train_binary_model(training_set, labels)
+function [best_model] = train_binary_model(training_set, labels, varargin)
     % TRAIN_MODEL Train a model for binary classification.
     %   
     % Trains a model for binary classification, cross-validating between:
@@ -9,6 +9,7 @@ function [best_model] = train_binary_model(training_set, labels)
     % Input arguments:
     %   - training_set  The training data, in a matrix sample by features.
     %   - labels        The labels of the data.
+    %   - K (optional)  Number of folds for cross validation. Default 5.
     %    
     % Output arguments:
     %   - best_model    The model that performed best in cross-validation.
@@ -16,12 +17,18 @@ function [best_model] = train_binary_model(training_set, labels)
     MODELS{2} = @QDA_wrapper;
     MODELS{3} = @SVM_wrapper;
     
+    % Get optional K parameter.
+    parser = inputParser;
+    isinteger = @(x) isnumeric(x) && (floor(x) == x);
+    addOptional(parser, 'K', 5, isinteger);
+    parse(parser, varargin{:});
+    K = parser.Results.K;
+    
     if size(training_set, 1) ~= size(labels, 1)
         error('Training set and labels have different lengths.');
     end
     
-    % test_indices will contain in which run an element is in test fold.
-    K = length(MODELS);
+    % test_indices(i): which run element i will be in test fold.
     test_size = floor(length(labels) / K);
     % First K-1 folds
     test_indices = ones(length(labels));
@@ -35,31 +42,37 @@ function [best_model] = train_binary_model(training_set, labels)
     % Random permutation.
     test_indices = test_indices(randperm(length(test_indices)));
     
-    trained_models = cell(K);
-    model_scores = nan(K);
-    for m = 1:K
-        % Training data
-        train_folds = training_set(test_indices ~= m, :);
-        train_labels = labels(test_indices ~= m);
+    average_scores = nan(length(MODELS), 1);
+    for m = 1:length(MODELS)
+        partial_scores = nan(K, 1);
+        for k = 1:K
+            % Training data
+            train_folds = training_set(test_indices ~= k, :);
+            train_labels = labels(test_indices ~= k);
         
-        % Test data
-        test_fold = training_set(test_indices == m, :);
-        test_labels = labels(test_indices == m);
+            % Test data
+            test_fold = training_set(test_indices == k, :);
+            test_labels = labels(test_indices == k);
         
-        % Train
-        trained_models{m} = MODELS{m}(train_folds, train_labels);
+            % Train
+            model = MODELS{m}(train_folds, train_labels);
         
-        % Validation score.
-        [pred, ~] = predict(trained_models{m}, test_fold);
-        accuracy = 100*sum(pred == test_labels)./length(test_labels);
-        
-        fprintf('Model %s obtained a test accuracy of: %f.\n', class(trained_models{m}), accuracy);
-        model_scores(m) = accuracy;
+            % Validation score.
+            [pred, ~] = predict(model, test_fold);
+            accuracy = 100*sum(pred == test_labels)./length(test_labels);
+            
+            partial_scores(k) = accuracy;
+        end
+        average = mean(partial_scores);
+        average_scores(m) = average;
+        fprintf('Model %d obtained an average test accuracy of: %f.\n', m, average);
     end
     
-    % Return the most accurate model.
-    [~, best_index] = max(model_scores);
-    best_model = trained_models{best_index};
+    % Select the most accurate model.
+    [~, best_index] = max(average_scores);
+    
+    % Train the model on all training data.
+    best_model = MODELS{best_index}(training_set, labels);
 end
 
 function [QDA_model] = QDA_wrapper(training_set, labels)
