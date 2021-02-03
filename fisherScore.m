@@ -1,8 +1,8 @@
 function [fisher_scores] = fisherScore(PSD, run_labels, type_labels, run_codes, class_codes)
 % [fisher_scores] = fisherScore(PSD, run_labels, type_labels, run_codes, class_codes)
 %
-% The function returns the fisher's score of each run for the PSD given in
-% input
+% The function returns the fisher's score of each run for the PSD given in input
+% (remember to normalize the distribution of the features-- e.g. log(PSD))
 %
 % Input arguments:
 %   - PSD                   PSD matrix [windows x frequences x channels]
