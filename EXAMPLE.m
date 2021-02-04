@@ -160,3 +160,8 @@ title('features mask');
 set(handles, 'CLim', [min(min(climits)) max(max(climits))]);
 
 sgtitle('Fisher score');
+
+train_set = X(cue_type_labels == code.cue_BH |cue_type_labels == code.cue_BF);
+label_set = cue_type_labels(cue_type_labels == code.cue_BH | cue_type_labels == code.cue_BF);
+
+probably_SVM = train_binary_model(train_set, label_set);

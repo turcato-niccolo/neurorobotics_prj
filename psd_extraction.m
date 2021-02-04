@@ -45,12 +45,14 @@ disp('[proc] |- Computing spectrogram');
 
 %% Extracting events
 disp('[proc] |- Extract and convert the events');
-events.TYP = h.EVENT.TYP(1:2:end);
-events.POS = h.EVENT.POS(1:2:end);
 
 if(~isfield(h.EVENT, 'DUR')) %Often disappears
+    events.TYP = h.EVENT.TYP(1:2:end);
+    events.POS = h.EVENT.POS(1:2:end);
     DUR = h.EVENT.POS(2:2:end) - events.POS;
 else
+    events.TYP = h.EVENT.TYP;
+    events.POS = h.EVENT.POS;
     DUR = h.EVENT.DUR;
 end
 

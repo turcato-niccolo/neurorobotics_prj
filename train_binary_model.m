@@ -81,5 +81,6 @@ end
 
 function [SVM_model] = SVM_wrapper(training_set, labels)
     SVM_model = fitcsvm(training_set, labels, 'KernelFunction', 'rbf');
+    SVM_model = fitPosterior(SVM_model, training_set, labels);
 end
 
