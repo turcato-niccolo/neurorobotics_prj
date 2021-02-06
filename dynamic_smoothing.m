@@ -22,7 +22,7 @@ function [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feed
     %reset accumulation to the base probability of this class = 1/num_classes
     reset_accumulation = 1./num_classes;
     %contains the accumulation evidence for the sample_i of the training set
-    accumulator = nan(size(post_probabilities,1));
+    accumulator = nan([size(post_probabilities,1) 1]);
     
     %used to check if the trial is changed
     last_sample_trial_label = nan;

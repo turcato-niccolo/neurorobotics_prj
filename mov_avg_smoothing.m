@@ -23,7 +23,6 @@ function [accumulator] = mov_avg_smoothing(post_probabilities, num_classes, feed
     accumulator = nan([size(post_probabilities,1) 1]);
     
     %used to check if the trial is changed
-    last_sample_trial_label = nan;
     num_samples = length(post_probabilities);
     
     % init accumulator
