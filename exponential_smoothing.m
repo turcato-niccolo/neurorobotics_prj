@@ -13,14 +13,12 @@ function [accumulator] = exponential_smoothing(post_probabilities, num_classes, 
 %        according to the smoothing algorithm
 %
 %
+
+    num_samples = length(post_probabilities);
     %reset accumulation to the base probability of this class = 1/num_classes
     reset_accumulation = 1./num_classes;
     %contains the accumulation evidence for the sample_i of the training set
-    accumulator = nan([size(post_probabilities, 1) 1]);
-    
-    %used to check if the trial is changed
-    last_sample_trial_label = nan;
-    num_samples = length(post_probabilities);
+    accumulator = nan(num_samples, 1);
     
     % init accumulator
     accumulator(1) = reset_accumulation;
