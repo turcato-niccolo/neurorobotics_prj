@@ -43,7 +43,7 @@ function [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feed
             new_evidence  = beta * new_evidence;
             % delta_y = beta * (alpha * f_free(y_t-1) + (1-alpha) * f_bmi(x_t))
             state = accumulator(sample_i - 1);
-            accumulator(sample_i) = state + max(min(new_evidence,1),0);
+            accumulator(sample_i) = max(min(state + new_evidence,1),0);
         end
     end
     
