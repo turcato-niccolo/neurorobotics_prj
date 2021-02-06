@@ -35,7 +35,7 @@ h = header;
 sample_rate = header.SampleRate;
 
 %% Spatial filters
-disp('[proc] |- Applying CAR and Laplacian');
+disp('[proc] |- Applying Laplacian');
 load('laplacian16.mat');
 s_lap = s*lap;
 
@@ -44,7 +44,7 @@ disp('[proc] |- Computing spectrogram');
 [P, freqgrid] = proc_spectrogram(s_lap, wlength, wshift, pshift, sample_rate, mlength);  
 
 %% Extracting events
-disp('[proc] |- Extract and convert the events');
+disp('[proc] |- Extracting and converting the events');
 
 if(~isfield(h.EVENT, 'DUR')) %Often disappears
     events.TYP = h.EVENT.TYP(1:2:end);

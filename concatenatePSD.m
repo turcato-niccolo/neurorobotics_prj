@@ -10,7 +10,7 @@ function [PSD_concatenated, EVENT_concatenated, run_labels, modality_labels, sam
 %
 % Output arguments:
 %   - PSD_concatenated      matrix concatenation of all PSD
-%   - EVENT_concatenated    EVENT structure containing (POS, DUR, FIN, TYP) info about all
+%   - EVENT_concatenated    EVENT structure containing (POS, DUR, TYP, MOD) info about all
 %   events in the concatenated PSD
 %   - run_labels            assigns a label with the run index to all
 %   windows of the concatenated PSD
@@ -22,7 +22,7 @@ function [PSD_concatenated, EVENT_concatenated, run_labels, modality_labels, sam
 EVENT_concatenated.POS = [];
 EVENT_concatenated.TYP = [];
 EVENT_concatenated.DUR = [];
-EVENT_concatenated.FIN = [];
+EVENT_concatenated.MOD = [];
 run_labels = [];
 modality_labels = [];
 PSD_concatenated = [] ;
@@ -43,6 +43,7 @@ for run_i = 1 : length(PSD_data)
     %data locally dependent
     EVENT_concatenated.TYP = cat(1, EVENT_concatenated.TYP, data.EVENT.TYP);
     EVENT_concatenated.DUR = cat(1, EVENT_concatenated.DUR, data.EVENT.DUR);
+    EVENT_concatenated.MOD = cat(1, EVENT_concatenated.MOD, modality .* ones(length(data.EVENT.TYP), 1));
     PSD_concatenated = cat(1, PSD_concatenated, data.PSD);
     %globaly dependent data
     EVENT_concatenated.POS = cat(1, EVENT_concatenated.POS, data.EVENT.POS + zero_reference);
@@ -50,9 +51,9 @@ for run_i = 1 : length(PSD_data)
     %windows indexed vectors
     num_windows = size(data.PSD, 1);
     
-    run_labels = cat(1, run_labels, run_i * ones(num_windows, 1));
+    run_labels = cat(1, run_labels, run_i .* ones(num_windows, 1));
     
-    modality_labels = cat(1, modality_labels, modality * ones(num_windows, 1));
+    modality_labels = cat(1, modality_labels, modality .* ones(num_windows, 1));
     
 end
 end
