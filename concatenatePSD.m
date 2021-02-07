@@ -33,7 +33,7 @@ for run_i = 1 : length(PSD_data)
     
     data = PSD_data{run_i};
     sample_rate = data.sample_rate;
-    freqs = data.frequences;
+    freqs = data.frequencies;
     modality = data.modality;
     
     %save reference to the relative zero position
