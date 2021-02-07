@@ -1,5 +1,6 @@
-function [ERD] = compute_ERD_band(signal, SampleRate, avg_window, in_filter, band, ref_start, ref_stop, d_start, d_stop)
-%   Function to compute ERD of the given signal on beta bands
+function [ERD_ERS] = compute_ERD_ERS_band(signal, SampleRate, avg_window, in_filter, band, ref_start, ref_stop, interest_start, interest_stop)
+%   [ERD_ERS] = compute_ERD_band(signal, SampleRate, avg_window, in_filter, band, ref_start, ref_stop, d_start, d_stop)
+%   Function to compute ERD/ERS of the given signal on the specified band
 %   Input arguments:
 %       -signal: EEG data [samples x channels]: not normalized
 %       -filter: filter [channel x channel]
@@ -7,8 +8,11 @@ function [ERD] = compute_ERD_band(signal, SampleRate, avg_window, in_filter, ban
 %       -band: selected band (e.g. mu or beta)
 %       -ref_start: index of the starting point of reference data
 %       -ref_stop: index of the ending point of reference data
-%       -d_start: index of the starting point of desynchronization data
-%       -d_stop: index of the ending point of desynchronization data
+%       -interest_start: index of the starting point of interesting data
+%       -interest_stop: index of the ending point of interesting data
+%   Output:
+%       -ERD_ERS: event-related desynchronization/synchronization computed
+%       on the indicated eeg data, with respect to the given reference
     
     signal = signal*in_filter;
     
@@ -39,10 +43,10 @@ function [ERD] = compute_ERD_band(signal, SampleRate, avg_window, in_filter, ban
     %% Baseline extraction (from reference, e.g.fixation)
     %ref_dur = ref_stop - ref_start;
     ref_data = signal_logpower(ref_start:ref_stop, :);
-    d_data = signal_logpower(d_start:d_stop, :);
+    interest_data = signal_logpower(interest_start:interest_stop, :);
     
-    ref_data = repmat(mean(ref_data), [size(d_data, 1) 1]);
+    ref_data = repmat(mean(ref_data), [size(interest_data, 1) 1]);
     
-    ERD = 100 * (d_data - ref_data)./ ref_data;    
+    ERD_ERS = 100 * (interest_data - ref_data)./ ref_data;    
 end
 
