@@ -1,26 +1,38 @@
-\section{Methods}
 The implemented methodology follows the BCI literature. \\
-Work is divided in two main tasks for each subject: creation and calibration of a classifier based on "offline" data, classification of "online" data (serving also as a test). \\
-\newpage
-
-{\Large \textbf{Offline task:}}
-
+Work is divided in two main tasks for each subject: 
 \begin{itemize}
-\item \textbf{Data Analysis:} The provided data is in the form of raw EEG [samples x channels], and since in this state it is not useful for classifications, we used the  procedure described in class to compute the corresponding PSD [windows x frequencies x channels].\\
-Before applying the actual PSD procedure, the EEG data is first filtered with a laplacian filter [channels x channels] (insert image).\\
-Lastly, the PSD is polished by applying a moving average (1s window). \\
-Of course, each window is associated with an event.
-\item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the discriminant features are selected, each feature is in the form [frequency x channel] (or Channel@Freq). In this step, channels are selected only if they are meaningful for MI tasks [...]. \\
-\item \textbf{Classifier training:} The previous steps allow to build a training set for each subject (one can use all the available offline data), by selecting the windows associated with the MI tasks. Then for each subject we applied cross validation to choose between three differt kind of classificators (LDA, QDA, SVM with rbf kernel).\\
-At the end of this step, for each subject we have a trained classifier, that takes in input the selected features from a spectogram (one for each channel/electrode) computed on a window of EEG signal, and returns in output the label of the MI task that it recognizes. \\
+\item creation and calibration of a classifier based on "offline" data
+\item classification of "online" data (serving also as a test)
+\end{itemize}\noindent
+{\Large \textbf{Data manipulation:}}
+The provided data is in the form of raw EEG [samples x channels], and since in this state it is not useful for classifications, we used the procedure described in class to compute the corresponding PSD [windows x frequencies x channels].\\
+Before applying the actual PSD procedure, the EEG data is first transformed into the laplacian referencing with a filter [channels x channels] (insert image) in order to enhance the localization of the events related to the executed tasks.\\
+After this we have split the data into the offline part used to train an tuning and the online part used as test.\\ \\
+{\Large \textbf{Offline task:}}
+\begin{itemize}
+\item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the more discriminant features are selected, each feature corresponds to a (frequency , channel) pair. In this step, we take into account only if the pairs that are meaningful for MI tasks:
+\begin{itemize}
+\item around the channels C3 and C4 in the mu rithm
+\footnote{for mu rithm we mean the activity of populations of neurons in the motor-cortex region approximately with frequencies 8-13 (can slightly change from subject to subject)}
+for the task of both hands
+\item around Cz in the beta rithm
+\footnote{for beta rithm we mean the activity of populations of neurons in the motor-cortex region(also frontal region but is not related to motor-imagery tasks) approximately with frequencies 13-30 (can slightly change from subject to subject)}
+for the task of both feet
+\end{itemize}
+In order to correctly select the more discriminant features we have first normalized the distribution of the samples with respect to the two features we are interested in, applying a logarithmic transformation to the PSD matrix.
+Then we have compute the Fisher's score and for removing features that from the literature we know are not related to the tasks, we have applied weights to them and then selected the best k.
+\item \textbf{Classifier training:} The previous steps allow to build a training set for each subject (one can use all the available offline data), by selecting the windows associated with the MI tasks. Then for each subject we applied k-fold cross validation to choose between three differ kind of classificators (LDA, QDA, SVM with rbf kernel).\\
+At the end of this step, for each subject we have a trained classifier, that takes in input the selected features from a window of the PSD, and returns in output the label of the MI task that it recognizes. \\
+\item \textbf{Evidence accumulation tuning:} We also use offline data for tuning the parameters of the evidence accumulation frameworks that is used to obtain better classification at trial level. 
 \end{itemize}
 
 \noindent
 {\Large\textbf{Online task:}}
 
 \begin{itemize}
-\item \textbf{Feature extraction:} Given a \textbf{single} window of EEG signal of a patient, we analyze it (as described before) and extract the features of interest for said patient (determined in a previous step). \\
-Anyways, for the sake of the simulation, one can also compute the PSD and extract features on the entire online data
-\item \textbf{Classification:} Once we have extracted the features, the classifier trained for the current patient is used to estimate the performed task, with a certain confidence value. \\
-At last, we can evaluate the performance of the system with single-sample accuracy and after evidence accumulation (grand average over a single patient, and grand-grand average on all the patients).
+\item \textbf{Feature extraction:} Given the online data we extract from it the same features we found in the offline data for the subject. 
+\item \textbf{Classification test:} Once we have extracted the features, the classifier trained for the current patient is used to estimate the performed task, with a certain confidence value. \\
+At last, we can evaluate the performance of the system with single-sample accuracy.
+\item \textbf{Evidence accumulation test:} Then we use the evidence accumulation frameworks (with the parameters found in offline data for the subject) over the predictions of the classifier.\\
+At the end we evaluate the performance on the continuos feedback period in order to obtain a trial level accuracy.
 \end{itemize}
