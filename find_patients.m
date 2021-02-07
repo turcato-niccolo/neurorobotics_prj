@@ -27,8 +27,9 @@ function [patients] = find_patients(root)
         directory = subdirs(i).name;
         % Assume patient name/code is before first underscore.
         name = split(directory, '_');
+        name = name{1};
         % Files in subdirectory.
-        files = dir(strcat(datapath, directory));
+        files = dir(fullfile(root, directory));
         filenames = cell(length(files), 1);
         for j = 1:length(files)
             filenames{j} = files(j).name;
@@ -42,7 +43,7 @@ function [patients] = find_patients(root)
         for j = 1:length(filenames)
             if endsWith(filenames{j}, '.gdf')
                 % Full file name including root.
-                full = strcat(datapath, directory, '/', filenames{j});
+                full = fullfile(root, directory, filenames{j});
                 if contains(filenames{j}, 'offline')
                     patients{i}.offline_files{end+1} = full;
                 else

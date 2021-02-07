@@ -1,5 +1,5 @@
-function [data_set, selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
-% [data_set, selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
+function [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
+% [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
 %
 % The function extracts the data to be used to train the classifiers (remember to normalize the PSD e.g. with log())
 %
@@ -16,8 +16,6 @@ function [data_set, selected_freq_chan_index , fisher_score_run] = psd2features(
 %   the features extracted with respect to their fisher's score
 %
 % Output arguments:
-%   - data_set                  [windows x feature] matrix that is the
-%   dataset to use in training
 %   - selected_freq_chan_index  cell array containing the coordinates of all 
 %   selected features     
 %   - fisher_score_run          [freqences x channels x runs] atrix
@@ -36,9 +34,6 @@ if ~exist('feature_weights','var')
 end
 filtered_mean_fisher = mean_fisher_score .* feature_weights;
 selected_freq_chan_index = bestFeatures(filtered_mean_fisher, num_features);
-
-%% Features extraction
-data_set = extractFeatures(PSD , selected_freq_chan_index);
     
 end
 

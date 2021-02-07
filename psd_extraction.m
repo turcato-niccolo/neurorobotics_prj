@@ -65,7 +65,7 @@ events.conversion = winconv;
 data = struct;
 data.PSD = P;
 data.EVENT = events;
-data.frequences = freqgrid;
+data.frequencies = freqgrid;
 data.sample_rate = sample_rate;
 
 end
