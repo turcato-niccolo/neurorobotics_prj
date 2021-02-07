@@ -1,4 +1,4 @@
-function [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
+function [selected_freq_chan_index, fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
 % [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
 %
 % The function extracts the data to be used to train the classifiers (remember to normalize the PSD e.g. with log())
