@@ -1,12 +1,22 @@
 The implemented methodology follows the BCI literature. \\
 Work is divided in two main tasks for each subject: 
 \begin{itemize}
-\item creation and calibration of a classifier based on "offline" data
-\item classification of "online" data (serving also as a test)
+\item Creation and calibration of a classifier based on "offline" data
+\item Classification of "online" data (serving also as a test)
 \end{itemize}\noindent
 {\Large \textbf{Data manipulation:}}
 The provided data is in the form of raw EEG [samples x channels], and since in this state it is not useful for classifications, we used the procedure described in class to compute the corresponding PSD [windows x frequencies x channels].\\
-Before applying the actual PSD procedure, the EEG data is first transformed into the laplacian referencing with a filter [channels x channels] (insert image) in order to enhance the localization of the events related to the executed tasks.\\
+Before applying the actual PSD procedure, the EEG data is first transformed into the laplacian referencing with a filter [channels x channels] in order to enhance the localization of the events related to the executed tasks.\\
+
+\begin{figure}[h!]
+	\begin{center}
+		 \includegraphics[width=0.4\linewidth]{img/laplacian_filter.png}
+	\end{center}
+
+	 \caption{Laplacian filter (16x16)}
+	 \label{fig:laplacian_filter}
+\end{figure}
+
 After this we have split the data into the offline part used to train an tuning and the online part used as test.\\ \\
 {\Large \textbf{Offline task:}}
 \begin{itemize}
