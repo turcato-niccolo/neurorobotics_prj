@@ -11,17 +11,17 @@ After this we have split the data into the offline part used to train an tuning 
 {\Large \textbf{Offline task:}}
 \begin{itemize}
 \item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the more discriminant features are selected, each feature corresponds to a (frequency , channel) pair. In this step, we take into account only if the pairs that are meaningful for MI tasks that are the beta
-\footnote{for beta rithm we mean the activity of populations of neurons in the motor-cortex region(also frontal region but is not related to motor-imagery tasks) approximately with frequencies 13-30 (can slightly change from subject to subject)}
+\footnote{for beta rhythm we mean the activity of populations of neurons in the motor-cortex region(also frontal region but is not related to motor-imagery tasks) approximately with frequencies 13-30 (can slightly change from subject to subject)}
  and mu
- \footnote{for mu band we mean the activity of populations of neurons in the motor-cortex region approximately with frequencies 8-13 (can slightly change from subject to subject)}
-rithms.\\
+ \footnote{for mu rhythm we mean the activity of populations of neurons in the motor-cortex region approximately with frequencies 8-13 (can slightly change from subject to subject)}
+rhythms.\\
 In other words:
 \begin{itemize}
 \item around the channels C3 and C4 for the task of both hands and around Cz for the task of both feet
 \item  in the mu band for the ERD
- \footnote{for ERD -event related desyncronization- we mean when some populations of neurons starts to fire in asyncronus way in response to a task to execute causing a decrease in power of the eeg signal in that area}
+ \footnote{for ERD -event related de synchronization- we mean when some populations of neurons starts to fire in asynchronous way in response to a task to execute causing a decrease in power of the EEG signal in that area}
  in the beta band for the ERS 
- \footnote{for ERS -event related syncronization- we mean when some populations of neurons after an ERD starts to re-synchronize their firing rate causing an increment in power of the eeg signal in that area}
+ \footnote{for ERS -event related synchronization- we mean when some populations of neurons after an ERD starts to re-synchronize their firing rate causing an increment in power of the EEG signal in that area}
 \end{itemize}
 In order to correctly select the more discriminant features we have first normalized the distribution of the samples with respect to the two features we are interested in, applying a logarithmic transformation to the PSD matrix.
 Then we have compute the Fisher's score and for removing features that from the literature we know are not related to the tasks, we have applied weights to them and then selected the best k.
