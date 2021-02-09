@@ -1,5 +1,5 @@
-function [fisher_scores] = fisherScore(PSD, run_labels, type_labels, run_codes, class_codes)
-% [fisher_scores] = fisherScore(PSD, run_labels, type_labels, run_codes, class_codes)
+function [fisher_scores] = fisher_score(PSD, run_labels, type_labels, run_codes, class_codes)
+% [fisher_scores] = fisher_score(PSD, run_labels, type_labels, run_codes, class_codes)
 %
 % The function returns the fisher's score of each run for the PSD given in input
 % (remember to normalize the distribution of the features-- e.g. log(PSD))

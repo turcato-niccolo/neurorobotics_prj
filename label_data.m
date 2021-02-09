@@ -1,5 +1,5 @@
-function [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
-% [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
+function [cue_k, trial_k] = label_data(EVENT, num_windows)
+% [cue_k, trial_k] = label_data(EVENT, num_windows)
 % The function returns the labelling vectors traslating event indexing
 % to window indexing for (TYP,trial) information of the PSD
 %
@@ -8,9 +8,9 @@ function [cue_type_labels, trial_labels] = labelData(EVENT,num_windows)
 %   (POS,TYP,DUR)for each event in the PSD
 %
 % Output arguments:
-%   - cue_type_labels       labelling vector for the type of event the
+%   - cue_k      labelling vector for the type of event the
 %   window is assigned to
-%   - trial_labels          labelling vector for the trial number the
+%   - trial_k       labelling vector for the trial number the
 %   window is assigned to
 
 code.fixation = 786;
@@ -34,15 +34,15 @@ num_trials = length(cue_event.TYP);
 
 % We consider the intersting data as the one from Cue apperance to end of continuous feedback
 % type_labels(window_i)= zero if not selected -- TYP of it's cue event if selected
-cue_type_labels = zeros(num_windows, 1);
+cue_k = zeros(num_windows, 1);
 %mask containing the trial of data_mask(window_i)
-trial_labels = zeros(num_windows, 1);
+trial_k = zeros(num_windows, 1);
 
 for trial_i = 1:num_trials
     start = cue_event.POS(trial_i);
     stop  = feedback_event.POS(trial_i) + feedback_event.DUR(trial_i) - 1;
-    cue_type_labels(start:stop) = cue_event.TYP(trial_i);
-    trial_labels(start:stop) = trial_i;
+    cue_k(start:stop) = cue_event.TYP(trial_i);
+    trial_k(start:stop) = trial_i;
 end
 end
 
