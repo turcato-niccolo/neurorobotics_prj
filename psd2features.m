@@ -1,4 +1,4 @@
-function [selected_frequnces, fisher_score_run] = psd2features(PSD, run_k, cue_k, classes, num_features ,features_weight)
+function [selected_features, fisher_score_run] = psd2features(PSD, run_k, cue_k, classes, num_features ,features_weight)
 % [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
 %
 % The function extracts the data to be used to train the classifiers (remember to normalize the PSD e.g. with log())
@@ -28,12 +28,12 @@ fisher_score_run = fisher_score(PSD, run_k, cue_k, run_codes, classes);
 mean_fisher_score = mean(fisher_score_run, 3);
 
 %% Features selection
-if ~exist('feature_weights','var')
+if ~exist('features_weight','var')
     %default weights are a matrix of all ones
     features_weight = ones(size(mean_fisher_score));
 end
 filtered_mean_fisher = mean_fisher_score .* features_weight;
-selected_frequnces = best_features(filtered_mean_fisher, num_features);
+selected_features = best_features(filtered_mean_fisher, num_features);
     
 end
 
