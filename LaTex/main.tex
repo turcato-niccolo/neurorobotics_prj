@@ -2,11 +2,24 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{graphicx}
- 
+\usepackage{comment}
+\usepackage{hyperref} 
+
 \setmainfont{Times New Roman}
 \title{Project \#4}
 \author{Riccardo De Zen - 2019295 \\ Mattia Fanan - 2019138 \\ Niccolo' Turcato - 2021446}
 \date{a.a. 20/21}
+
+\begin{comment}
+	Compile with LuaLatex or xetex
+\end{comment}
+
+
+\addtolength{\oddsidemargin}{-1.5cm}
+\addtolength{\evensidemargin}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\topmargin}{-1.5cm}
+\addtolength{\textheight}{3cm}
 
 \begin{document}
 \maketitle
@@ -14,12 +27,16 @@
 
 \newpage
 
+\section{Introduction}
 \input{intro}
-\begin{figure}[h!]
-  \includegraphics[width=0.4\linewidth]{electrodes_layout.PNG}
-  \caption{Electrodes layout}
-  \label{fig:electrodes_layout}
-\end{figure}
+
+\section{Methods}
 \input{methods}
+
+\section{Results}
+\input{results}
+
+\section{Discussion}
+\input{discussion}
 
 \end{document}

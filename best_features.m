@@ -1,5 +1,5 @@
-function [features] = bestFeatures(fisher_score, num_features_to_select)
-% [features] = bestFeatures(fisher_score, num_features_to_select)
+function [features] = best_features(fisher_score, num_features_to_select)
+% [features] = best_features(fisher_score, num_features_to_select)
 %
 % The function returns the index of the best features with respect to the
 % fisher score matrix.

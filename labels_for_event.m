@@ -1,5 +1,5 @@
-function [logical_index] = getLabelsForEventType(EVENT, type, num_points)
-%[labels] = getLabelsForEventType(EVENT, type, num_points)
+function [logical_index] = labels_for_event(EVENT, type, num_points)
+%[logical_index] = labels_for_event(EVENT, type, num_points)
 %
 % The function returns a logical index for extracting the desired type of
 % event from the data

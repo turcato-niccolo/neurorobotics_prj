@@ -1,4 +1,4 @@
-function [selected_freq_chan_index, fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
+function [selected_features, fisher_score_run] = psd2features(PSD, run_k, cue_k, classes, num_features ,features_weight)
 % [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
 %
 % The function extracts the data to be used to train the classifiers (remember to normalize the PSD e.g. with log())
@@ -6,34 +6,34 @@ function [selected_freq_chan_index, fisher_score_run] = psd2features(PSD, run_la
 % Input arguments:
 %   - PSD_data                  [windows x frequences x channels] matrix
 %   containing PSD data
-%   - run_labels                [windows x 1] vector that associates a run
+%   - run_k                     [windows x 1] vector that associates a run
 %   number to each windows 
-%   - cue_type_labels           [windows x 1] vector that associates a cue
+%   - cue_k                     [windows x 1] vector that associates a cue
 %   task to each windows
 %   -classes                    vector containing one code for each class
 %   - num_features              number of features to extract
-%   - feature_weights           (optional) weight to modify the priority of
+%   - features_weight           (optional) weight to modify the priority of
 %   the features extracted with respect to their fisher's score
 %
 % Output arguments:
-%   - selected_freq_chan_index  cell array containing the coordinates of all 
+%   - selected_frequences       cell array containing the coordinates of all 
 %   selected features     
 %   - fisher_score_run          [freqences x channels x runs] atrix
 %   containing one fisher's score matrix for each run
 
 %% Computing fisher score (for each run)
 
-run_codes = unique(run_labels);
-fisher_score_run = fisherScore(PSD, run_labels, cue_type_labels, run_codes, classes);
+run_codes = unique(run_k);
+fisher_score_run = fisher_score(PSD, run_k, cue_k, run_codes, classes);
 mean_fisher_score = mean(fisher_score_run, 3);
 
 %% Features selection
-if ~exist('feature_weights','var')
+if ~exist('features_weight','var')
     %default weights are a matrix of all ones
-    feature_weights = ones(size(mean_fisher_score));
+    features_weight = ones(size(mean_fisher_score));
 end
-filtered_mean_fisher = mean_fisher_score .* feature_weights;
-selected_freq_chan_index = bestFeatures(filtered_mean_fisher, num_features);
+filtered_mean_fisher = mean_fisher_score .* features_weight;
+selected_features = best_features(filtered_mean_fisher, num_features);
     
 end
 
