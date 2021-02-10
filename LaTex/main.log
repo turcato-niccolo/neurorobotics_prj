@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.13.0 (MiKTeX 21.1) (format=lualatex 2021.2.3)  9 FEB 2021 11:28
+This is LuaHBTeX, Version 1.13.0 (MiKTeX 21.1) (format=lualatex 2021.2.3)  10 FEB 2021 13:50
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -497,125 +497,142 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 33.
  [3<./img/code_raw_eeg_lap.PNG><./img/laplacian_filter.png>]
-<img/code_extract_frequencies_normalize_data.PNG, id=66, 726.46407pt x 277.7878
+<img/code_extract_frequencies_normalize_data.PNG, id=67, 726.46407pt x 277.7878
 1pt>
 File: img/code_extract_frequencies_normalize_data.PNG Graphic file (type png)
 <use img/code_extract_frequencies_normalize_data.PNG>
 Package luatex.def Info: img/code_extract_frequencies_normalize_data.PNG  used 
-on input line 52.
+on input line 54.
 (luatex.def)             Requested size: 267.21767pt x 102.1822pt.
-<img/features_filter.png, id=67, 439.8834pt x 401.8212pt>
+<img/features_filter.png, id=68, 439.8834pt x 401.8212pt>
 File: img/features_filter.png Graphic file (type png)
 <use img/features_filter.png>
-Package luatex.def Info: img/features_filter.png  used on input line 62.
+Package luatex.def Info: img/features_filter.png  used on input line 64.
 (luatex.def)             Requested size: 178.14058pt x 162.72443pt.
-<img/fisher_score_calibration_ai6.PNG, id=68, 997.47656pt x 306.39468pt>
+<img/fisher_score_calibration_ai6.PNG, id=69, 997.47656pt x 306.39468pt>
 File: img/fisher_score_calibration_ai6.PNG Graphic file (type png)
 <use img/fisher_score_calibration_ai6.PNG>
 Package luatex.def Info: img/fisher_score_calibration_ai6.PNG  used on input li
-ne 71.
+ne 73.
 (luatex.def)             Requested size: 356.28796pt x 109.43709pt.
-<img/fisher_score_calibration_ai6_avg_filtered.PNG, id=69, 958.3303pt x 413.294
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<img/fisher_score_calibration_ai6_avg_filtered.PNG, id=70, 958.3303pt x 413.294
 07pt>
 File: img/fisher_score_calibration_ai6_avg_filtered.PNG Graphic file (type png)
 
 <use img/fisher_score_calibration_ai6_avg_filtered.PNG>
 Package luatex.def Info: img/fisher_score_calibration_ai6_avg_filtered.PNG  use
-d on input line 80.
+d on input line 82.
 (luatex.def)             Requested size: 356.28796pt x 153.65425pt.
-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
 [4<./img/code_extract_frequencies_normalize_data.PNG><./img/features_filter.png>
-<./img/fisher_score_calibration_ai6.PNG>]
-<img/code_select_features.PNG, id=84, 597.73312pt x 91.84312pt>
+]
+<img/code_select_features.PNG, id=88, 597.73312pt x 91.84312pt>
 File: img/code_select_features.PNG Graphic file (type png)
 <use img/code_select_features.PNG>
-Package luatex.def Info: img/code_select_features.PNG  used on input line 93.
+Package luatex.def Info: img/code_select_features.PNG  used on input line 95.
 (luatex.def)             Requested size: 356.28796pt x 54.74472pt.
-<img/code_extract_train_set.PNG, id=85, 411.78844pt x 149.05687pt>
+<img/code_extract_train_set.PNG, id=89, 411.78844pt x 149.05687pt>
 File: img/code_extract_train_set.PNG Graphic file (type png)
 <use img/code_extract_train_set.PNG>
-Package luatex.def Info: img/code_extract_train_set.PNG  used on input line 101
+Package luatex.def Info: img/code_extract_train_set.PNG  used on input line 103
 .
 (luatex.def)             Requested size: 222.67912pt x 80.60323pt.
-<img/code_cv_ai6.PNG, id=86, 398.23781pt x 115.93312pt>
-File: img/code_cv_ai6.PNG Graphic file (type png)
-<use img/code_cv_ai6.PNG>
-Package luatex.def Info: img/code_cv_ai6.PNG  used on input line 110.
-(luatex.def)             Requested size: 222.67912pt x 64.8248pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<img/code_train_set_results_ai6.PNG, id=87, 704.6325pt x 624.83438pt>
+<img/code_cv_ai6.PNG, id=90, 398.23781pt x 115.93312pt>
+File: img/code_cv_ai6.PNG Graphic file (type png)
+<use img/code_cv_ai6.PNG>
+Package luatex.def Info: img/code_cv_ai6.PNG  used on input line 112.
+(luatex.def)             Requested size: 222.67912pt x 64.8248pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<img/code_train_set_results_ai6.PNG, id=91, 704.6325pt x 624.83438pt>
 File: img/code_train_set_results_ai6.PNG Graphic file (type png)
 <use img/code_train_set_results_ai6.PNG>
 Package luatex.def Info: img/code_train_set_results_ai6.PNG  used on input line
- 119.
+ 121.
 (luatex.def)             Requested size: 311.74942pt x 276.44391pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
 
  []
 
-[5<./img/fisher_score_calibration_ai6_avg_filtered.PNG><./img/code_select_featur
-es.PNG><./img/code_extract_train_set.PNG>]
-<img/code_load_online_and_features_extraction.PNG, id=98, 728.7225pt x 263.4843
-8pt>
+[5<./img/fisher_score_calibration_ai6.PNG><./img/fisher_score_calibration_ai6_av
+g_filtered.PNG>]
+<img/code_load_online_and_features_extraction.PNG, id=110, 728.7225pt x 263.484
+38pt>
 File: img/code_load_online_and_features_extraction.PNG Graphic file (type png)
 <use img/code_load_online_and_features_extraction.PNG>
 Package luatex.def Info: img/code_load_online_and_features_extraction.PNG  used
- on input line 139.
+ on input line 153.
 (luatex.def)             Requested size: 311.74942pt x 112.71712pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
-<img/code_test_set_results_ai6.PNG, id=100, 761.09344pt x 607.51968pt>
+<img/code_test_set_results_ai6.PNG, id=112, 761.09344pt x 607.51968pt>
 File: img/code_test_set_results_ai6.PNG Graphic file (type png)
 <use img/code_test_set_results_ai6.PNG>
 Package luatex.def Info: img/code_test_set_results_ai6.PNG  used on input line 
-152.
+166.
 (luatex.def)             Requested size: 311.74942pt x 248.85292pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./results.tex) (./discussion.tex) [6<./img/code_cv_ai6.PNG><./img/code_train_
-set_results_ai6.PNG>] [7<./img/code_load_online_and_features_extraction.PNG><./i
-mg/code_test_set_results_ai6.PNG>] (./main.aux)
+[6<./img/code_select_features.PNG><./img/code_extract_train_set.PNG><./img/code_
+cv_ai6.PNG>]) (./results.tex) (./discussion.tex) [7<./img/code_train_set_results
+_ai6.PNG><./img/code_load_online_and_features_extraction.PNG>] [8<./img/code_tes
+t_set_results_ai6.PNG>] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 611F4313B1D12F546D989549DE9D7FD9;356.
 )
 
 Here is how much of LuaTeX's memory you used:
- 11358 strings out of 478821
+ 11362 strings out of 478821
  100000,662416 words of node,token memory allocated
- 465 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 6 glue, 3 kern, 1 glyph, 8 attribute, 51 glue_spec,
- 8 attribute_list, 1 write nodes
-   avail lists: 1:1,2:318,3:154,4:13,5:79,6:30,7:4086,8:29,9:245,10:8,11:281
- 30544 multiletter control sequences out of 65536+200000
+ 553 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 14 glue, 3 kern, 1 glyph, 16 attribute, 51 glue_spe
+c, 16 attribute_list, 1 write nodes
+   avail lists: 1:1,2:448,3:194,4:13,5:109,6:33,7:4294,8:40,9:276,10:8,11:318
+ 30545 multiletter control sequences out of 65536+200000
  63 fonts using 18522103 bytes
- 81i,8n,85p,402b,418s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/WINDOWS/Fonts/timesbd.ttf><C:/WINDOWS/Fonts/times.ttf>
-Output written on main.pdf (7 pages, 438666 bytes).
+ 81i,8n,85p,612b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/WINDOWS/Fonts/timesbd.ttf><C:/WINDOWS/Fonts/times.ttf><C:/Users/nturc/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/ntur
+c/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Use
+rs/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
+<C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
+10.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmr6.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
+sfonts/cm/cmr8.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmsy6.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (8 pages, 514998 bytes).
 
-PDF statistics: 134 PDF objects out of 1000 (max. 8388607)
- 30 named destinations out of 1000 (max. 131072)
+PDF statistics: 182 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 131072)
  33 words of extra memory for PDF output out of 10000 (max. 100000000)
 
