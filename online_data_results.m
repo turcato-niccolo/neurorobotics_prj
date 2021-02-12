@@ -19,7 +19,7 @@ for i=1:length(patients)
     patients_test_ssa_confusion_matrix(i, :, :) = load(strcat(results_fold_root, patient, '_single_sample')).confusion_matrix;
 end
 
-patients_test_ssa_avg = mean(patients_test_ssa);
+patients_test_ssa_avg = mean(patients_test_ssa(2:));
 patients_test_ssa_classes_avg = mean(patients_test_ssa_classes);
 
 writematrix(patients_test_ssa, out_filename,'Sheet',1, 'Range', 'B2');

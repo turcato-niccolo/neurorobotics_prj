@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.13.0 (MiKTeX 21.1) (format=lualatex 2021.2.3)  10 FEB 2021 13:50
+This is LuaHBTeX, Version 1.13.0 (MiKTeX 21.1) (format=lualatex 2021.2.3)  11 FEB 2021 09:04
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -581,14 +581,14 @@ g_filtered.PNG>]
 File: img/code_load_online_and_features_extraction.PNG Graphic file (type png)
 <use img/code_load_online_and_features_extraction.PNG>
 Package luatex.def Info: img/code_load_online_and_features_extraction.PNG  used
- on input line 153.
+ on input line 154.
 (luatex.def)             Requested size: 311.74942pt x 112.71712pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--163
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
 
  []
 
@@ -596,27 +596,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--163
 File: img/code_test_set_results_ai6.PNG Graphic file (type png)
 <use img/code_test_set_results_ai6.PNG>
 Package luatex.def Info: img/code_test_set_results_ai6.PNG  used on input line 
-166.
+167.
 (luatex.def)             Requested size: 311.74942pt x 248.85292pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [6<./img/code_select_features.PNG><./img/code_extract_train_set.PNG><./img/code_
-cv_ai6.PNG>]) (./results.tex) (./discussion.tex) [7<./img/code_train_set_results
-_ai6.PNG><./img/code_load_online_and_features_extraction.PNG>] [8<./img/code_tes
-t_set_results_ai6.PNG>] (./main.aux)
+cv_ai6.PNG>]) (./results.tex
+<img/avg_selected_feature_n4features_autofilter.png, id=125, 551.1792pt x 501.5
+538pt>
+File: img/avg_selected_feature_n4features_autofilter.png Graphic file (type png
+)
+<use img/avg_selected_feature_n4features_autofilter.png>
+Package luatex.def Info: img/avg_selected_feature_n4features_autofilter.png  us
+ed on input line 6.
+(luatex.def)             Requested size: 222.67912pt x 202.63072pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) (./discussion.tex) [7<./img/code_train_set_results_ai6.PNG><./img/code_load_on
+line_and_features_extraction.PNG>] [8<./img/code_test_set_results_ai6.PNG><./img
+/avg_selected_feature_n4features_autofilter.png>] (./main.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 611F4313B1D12F546D989549DE9D7FD9;356.
 )
 
 Here is how much of LuaTeX's memory you used:
- 11362 strings out of 478821
+ 11375 strings out of 478821
  100000,662416 words of node,token memory allocated
  553 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 14 glue, 3 kern, 1 glyph, 16 attribute, 51 glue_spe
 c, 16 attribute_list, 1 write nodes
-   avail lists: 1:1,2:448,3:194,4:13,5:109,6:33,7:4294,8:40,9:276,10:8,11:318
- 30545 multiletter control sequences out of 65536+200000
+   avail lists: 1:1,2:450,3:200,4:13,5:109,6:31,7:4294,8:40,9:278,10:8,11:318
+ 30551 multiletter control sequences out of 65536+200000
  63 fonts using 18522103 bytes
  81i,8n,85p,612b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/WINDOWS/Fonts/timesbd.ttf><C:/WINDOWS/Fonts/times.ttf><C:/Users/nturc/AppDat
@@ -630,9 +646,9 @@ sfonts/cm/cmr8.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/type1/pub
 lic/amsfonts/cm/cmsy10.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmsy6.pfb><C:/Users/nturc/AppData/Local/Programs/MiKTeX/
 fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (8 pages, 514998 bytes).
+Output written on main.pdf (8 pages, 549661 bytes).
 
-PDF statistics: 182 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 131072)
+PDF statistics: 184 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 131072)
  33 words of extra memory for PDF output out of 10000 (max. 100000000)
 

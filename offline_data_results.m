@@ -12,7 +12,7 @@ for i=1:length(patients)
     patient = patients{i}.name;
     patients_features_matrices(:, :, i) = load(strcat(classifiers_fold_root, patient, '_feature_mask')).features_matrix;    
 end
-avg_feature_matrices = mean(patients_features_matrices, 3);
+avg_feature_matrices = mean(patients_features_matrices(:,:,2:5), 3);
 imagesc(squeeze(avg_feature_matrices)');
 colorbar
 axis square;
