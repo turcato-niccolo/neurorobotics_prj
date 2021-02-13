@@ -22,7 +22,7 @@ Before applying the actual PSD procedure, the EEG data is first transformed into
 		 \includegraphics[width=0.5\linewidth]{img/laplacian_filter.png}
 	\end{center}
 
-	 \caption{Laplacian filter (16x16)}
+	 \caption{(Small) Laplacian filter (16x16)}
 	 \label{fig:laplacian_filter}
 \end{figure}
 
@@ -132,9 +132,22 @@ At the end of this step, for each subject we have a trained classifier, that tak
 		\item Exponential smoothing: $\Delta_{y_t} = \alpha  (x_t - y_{t-1})$, $y_t = \alpha x_t +(1 - \alpha) y_{t-1}$
 		\item Dynamic smoothing: $\Delta_{y_t} = \beta  (\alpha F_{free}(y_{t-1}) + (1 - \alpha) F_{bmi}(x_t))$, $y_t = y_{t-1} + \Delta_{y_t}$
 		\item Moving average smoothing: $y_t = \alpha x_t +(1 - \alpha) \frac{\Sigma_{i=1}^{t-1}(y_i) + x_t}{t} $
-
 	\end{itemize}
+
 The last one serves more as a reference for the other two. \\
+
+\[ F_{free} = 
+	\begin{cases} 
+		-sin(\frac{\pi}{0.5-\omega} y) & if \ y \in [0, 0.5-\omega [ \\ 
+		-\sigma sin(\frac{\pi}{\omega}(y-0.5))  & if \ y \in [0.5 - \omega, 0.5 + \omega ] \\ 
+		sin(\frac{\pi}{0.5-\omega} (y -0.5 -\omega ))  & if \ y \in [0.5 + \omega, 1]
+	\end{cases} 
+\label{eq:f_free}
+\]
+
+\[ F_{bmi} = y = 6.4 .* (x - 0.5).^3 + 0.4 .* (x - 0.5) \\ \label{eq:f_bmi}\]
+
+
 For each framework we performed parameters' tuning using a genetic algorithm \footnote{Global optimization toolbox (Matlab)}. We performed two different tunings:
 	\begin{itemize}
 		\item First tuning on the whole offline data, that is then tested on the online data
@@ -172,6 +185,11 @@ Results are avalaialble in section \ref{sec:results}.
 \end{figure}
 
 At last, we can evaluate the performance of the system with single-sample accuracy.
-\item \textbf{Evidence accumulation test:} Then we used the evidence accumulation frameworks (with the parameters found in the tuning sessions for the subject) over the predictions of the classifier.\\
-At the end we evaluate the performance on the continuos feedback period in order to obtain a trial level accuracy.
+\item \textbf{Evidence accumulation test:} Lastly, we used the evidence accumulation frameworks (with the parameters found in the tuning sessions for the subject) over the predictions of the classifier.\\
+At the end we evaluate the performance on the continuos feedback period in order to obtain a trial level accuracy. \\
+Each trial that is analyzed with evidence accumulation is assigned to the class whose corresponding threshold is crossed first, so it's still a finite control (not continuos), but still more reliable than using single sample results as control. We also implemented the rejection of not classified trials, i.e. those tials that are not classified as either class of MI task, are classified as resting trials.
 \end{itemize}
+
+
+
+
