@@ -1,0 +1,26 @@
+First thing, we notice that our results are aligned with the reference results, both in terms of single sample and evidence accumulation accuracy, feature selection and choice of parameters. \\
+It's no surprise that the chosen electrodes are over the central area of the cortex, indicating that the subjects of the study, overall were able to correctly modulate their brain activity for the MI tasks. Moverover, this also indicates that the data analysis and manipulation is working correctly.\\
+We would like to remark that the use of a features filter (Figure \ref{fig:features_filter}) has allowed to basically automate the whole process, whitout the need to manually control features for each subject. \\
+
+As expected, results are really dependent on the single subject, and while in average the results are good, it is easy to see that a subset of patients performs poorly, while the rest in general has excellent performance. \\
+There could be room for improvement though, using different spatial filters for the subset of poorly-performant subjects, as the literature (ref PAPER spatial filters) shows that there are available other s. filters that give better results than (small) laplatian. \\
+
+As one could have anticipated, single sample results are mediocre, though they are far from bein random. 
+Again, not contradicting our expectations, ev.acc. framework do improve considerably our results confirming that the classifiers did infact learn to recognize MI tasks.
+
+Contrary to our expectation, the data was lacking resting trials, both in the offline and online data, for every patient, this has probably resulted in a benefit for our classification results with the evidence accumulation frameworks. The optimization algorithm has computed more restricting thresholds, in order to exploit the classificators' output, resulting in a more precise trial level classification.
+
+To analize evidence accumulation performance, we computed both accuracy over correctly classified trials and over correctly classified trials not considering trials that the framework could not classify (the curve does not cross any threshold).
+
+Of the 3 control frameworks, both exponential and dynamic smoothing obtain reasonable results, while the one based on moving average falls behind current state of the art performances.
+
+Of the two parameters' tuning techniques there is not a clear winner, if we were to consider only performance with rejection, we would say that exponential smoothing tuned over the first online run works best. If, instead, we were to consider only performance without rejection, we would probably choose that dynamic smoothing tuned over offline data. \\
+
+While online tuning does not produce encouraging results in this case, we must also consider that this technique uses considerably less data than the offline tuning, therefore it's very likely that if we had more online runs available, we could have obtained more satisfying performances.
+
+
+
+
+
+
+

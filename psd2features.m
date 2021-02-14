@@ -1,5 +1,5 @@
 function [selected_features, fisher_score_run] = psd2features(PSD, run_k, cue_k, classes, num_features ,features_weight)
-% [selected_freq_chan_index , fisher_score_run] = psd2features(PSD, run_labels, cue_type_labels, classes, num_features ,feature_weights)
+% [selected_features, fisher_score_run] = psd2features(PSD, run_k, cue_k, classes, num_features ,features_weight)
 %
 % The function extracts the data to be used to train the classifiers (remember to normalize the PSD e.g. with log())
 %
@@ -19,7 +19,7 @@ function [selected_features, fisher_score_run] = psd2features(PSD, run_k, cue_k,
 %   - selected_frequences       cell array containing the coordinates of all 
 %   selected features     
 %   - fisher_score_run          [freqences x channels x runs] atrix
-%   containing one fisher's score matrix for each run
+%   containing one Fisher's score matrix for each run
 
 %% Computing fisher score (for each run)
 

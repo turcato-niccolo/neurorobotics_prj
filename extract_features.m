@@ -4,12 +4,12 @@ function [dataset] = extract_features(PSD, selected_freq_chan_index)
 % features given in input
 %
 % Input arguments:
-%   - PSD                   PSD matix [windows x frequences x channels]
-%   - selected_freq_chan_index       cell array with elements (frequence_index,
+%   - PSD                           PSD matix [windows x frequences x channels]
+%   - selected_freq_chan_index      cell array with elements (frequence_index,
 % channel_index) for the features to be selected from the whole PSD
 %
 % Output arguments:
-%   - dataset                     [windows x features] matrix containing all and only the
+%   - dataset                       [windows x features] matrix containing all and only the
 %   selected fetaures
 
 num_features = length(selected_freq_chan_index);

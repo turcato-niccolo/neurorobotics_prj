@@ -1,12 +1,12 @@
 function [logical_index] = labels_for_event(EVENT, type, num_points)
-%[logical_index] = labels_for_event(EVENT, type, num_points)
+% [logical_index] = labels_for_event(EVENT, type, num_points)
 %
 % The function returns a logical index for extracting the desired type of
 % event from the data
 %
 % Input arguments:
 %   - EVENT                 structure with the following fields
-%   (POS,TYP,DUR,MOD)for each event in the data
+%   (POS,TYP,DUR)for each event in the data
 %   - type                	event the index is for
 %   - num_points           	number of samples in the data
 %

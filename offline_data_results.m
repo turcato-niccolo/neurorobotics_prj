@@ -3,6 +3,7 @@ selected_frequencies = (4:2:48)';
 channel_labels  = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
 patients = find_patients('data');
 classifiers_fold_root = '../classifiers/';
+online_fold_root = '../online-results/';
 
 out_filename = 'patients_offline_results.xlsx';
 
@@ -21,58 +22,132 @@ set(gca, 'XTickLabel', selected_frequencies);
 set(gca, 'YTick', 1:length(channel_labels));
 set(gca, 'YTickLabel', channel_labels);
 
+NAMES = {};
+SSA = [];
+SSA_BF = [];
+SSA_BH = [];
 
-patients_train_ssa = zeros(length(patients),1);
+% Moving average
+P_ACT_MOV = [];
+P_REJ_MOV = [];
+P_ACT_MOV_TEST = [];
+P_REJ_MOV_TEST = [];
+ALPHA_MOV = [];
+T_BH_MOV = [];
+T_BF_MOV = [];
 
-patients_train_ssa_classes = zeros(length(patients), 2);
-patients_train_ssa_confusion_matrix = zeros(length(patients), 2, 2);
+% Exponential Smoothing
+P_ACT_EXP = [];
+P_REJ_EXP = [];
+P_ACT_EXP_TEST = [];
+P_REJ_EXP_TEST = [];
+ALPHA_EXP = [];
+T_BH_EXP = [];
+T_BF_EXP = [];
 
-%% Single-sample accuracy on training data (avg, classes, confusion matrix)
-for i=1:length(patients)
-    patient = patients{i}.name;
-    patients_train_ssa(i) = load(strcat(classifiers_fold_root, patient, '_results_train')).accuracy;    
-    patients_train_ssa_classes(i,:) = load(strcat(classifiers_fold_root, patient, '_results_train')).accuracy_per_class;
-    patients_train_ssa_confusion_matrix(i, :, :) = load(strcat(classifiers_fold_root, patient, '_results_train')).confusion_matrix;
+% Dynamic force
+P_ACT_DYN = [];
+P_REJ_DYN = [];
+P_ACT_DYN_TEST = [];
+P_REJ_DYN_TEST = [];
+ALPHA_DYN = [];
+BETA_DYN = [];
+AMP_DYN = [];
+W_DYN = [];
+T_BH_DYN = [];
+T_BF_DYN = [];
+
+for p = 1:length(patients)
+    patient = patients{p}.name;
+    NAMES{p, 1} = patient;
+    SSA(p, 1) = load(strcat(classifiers_fold_root, patient, '_results_train')).accuracy;    
+    SSA_BF(p, 1) = load(strcat(classifiers_fold_root, patient, '_results_train')).accuracy_per_class(1);
+    SSA_BH(p, 1) = load(strcat(classifiers_fold_root, patient, '_results_train')).accuracy_per_class(2);
+    
+    % Load accuracy and params
+    load(strcat(classifiers_fold_root, patient, '_off_tuning_ev_acc'));
+    load(strcat(online_fold_root, patient, '_off_tuning_test_ev_acc'));
+    load(strcat(classifiers_fold_root, patient, '_classifier'));
+    
+    % Load parameters
+    P_ACT_MOV(p, 1) = perf_active_mov;
+    P_REJ_MOV(p, 1) = perf_active_rej_mov;
+    P_ACT_MOV_TEST(p, 1) = off_tun_perf_active_mov;
+    P_REJ_MOV_TEST(p, 1) = off_tun_perf_active_rej_mov;
+    ALPHA_MOV(p, 1) = mov_param.alpha;
+    T_BH_MOV(p, 1) = mov_param.up_threshold;
+    T_BF_MOV(p, 1) = mov_param.down_threshold;
+
+    % Exponential Smoothing
+    P_ACT_EXP(p, 1) = perf_active_ex;
+    P_REJ_EXP(p, 1) = perf_active_rej_ex;
+    P_ACT_EXP_TEST(p, 1) = off_tun_perf_active_ex;
+    P_REJ_EXP_TEST(p, 1) = off_tun_perf_active_rej_ex;
+    ALPHA_EXP(p, 1) = exp_param.alpha;
+    T_BH_EXP(p, 1) = exp_param.up_threshold;
+    T_BF_EXP(p, 1) = exp_param.down_threshold;
+
+    % Dynamic force
+    P_ACT_DYN(p, 1) = perf_active_dyn;
+    P_REJ_DYN(p, 1) = perf_active_rej_dyn;
+    P_ACT_DYN_TEST(p, 1) = off_tun_perf_active_dyn;
+    P_REJ_DYN_TEST(p, 1) = off_tun_perf_active_rej_dyn;
+    ALPHA_DYN(p, 1) = dyn_param.alpha;
+    BETA_DYN(p, 1) = dyn_param.beta;
+    AMP_DYN(p, 1) = dyn_param.amp;
+    W_DYN(p, 1) = dyn_param.w;
+    T_BH_DYN(p, 1) = dyn_param.up_threshold;
+    T_BF_DYN(p, 1) = dyn_param.down_threshold;
 end
 
-patients_train_ssa_avg = mean(patients_train_ssa);
-patients_train_ssa_classes_avg = mean(patients_train_ssa_classes);
+NAMES{end+1, 1} = 'AVG';
+SSA(end+1, 1) = mean(SSA);
+SSA_BF(end+1, 1) = mean(SSA_BF);
+SSA_BH(end+1, 1) = mean(SSA_BH);
 
-writematrix(patients_train_ssa, out_filename,'Sheet',1, 'Range', 'B2');
-writematrix(patients_train_ssa_classes, out_filename,'Sheet',1, 'Range', 'C2');
-writematrix(patients_train_ssa_avg, out_filename,'Sheet',1, 'Range', 'B10');
-writematrix(patients_train_ssa_classes_avg, out_filename,'Sheet',1, 'Range', 'C10');
+P_ACT_MOV(end+1, 1) = mean(P_ACT_MOV);
+P_REJ_MOV(end+1, 1) = mean(P_REJ_MOV);
+P_ACT_MOV_TEST(end+1, 1) = mean(P_ACT_MOV_TEST);
+P_REJ_MOV_TEST(end+1, 1) = mean(P_REJ_MOV_TEST);
+ALPHA_MOV(end+1, 1) = mean(ALPHA_MOV);
+T_BH_MOV(end+1, 1) = mean(T_BH_MOV);
+T_BF_MOV(end+1, 1) = mean(T_BF_MOV);
 
+P_ACT_EXP(end+1, 1) = mean(P_ACT_EXP);
+P_REJ_EXP(end+1, 1) = mean(P_REJ_EXP);
+P_ACT_EXP_TEST(end+1, 1) = mean(P_ACT_EXP_TEST);
+P_REJ_EXP_TEST(end+1, 1) = mean(P_REJ_EXP_TEST);
+ALPHA_EXP(end+1, 1) = mean(ALPHA_EXP);
+T_BH_EXP(end+1, 1) = mean(T_BH_EXP);
+T_BF_EXP(end+1, 1) = mean(T_BF_EXP);
 
-%% Evidence accumulation train results on tuning (after tuning on offline data)
-patients_exp_performances_offline_tuning_train = zeros(length(patients), 3);
-patients_dyn_performances_offline_tuning_train = zeros(length(patients), 3);
-patients_mov_performances_offline_tuning_train = zeros(length(patients), 3);
+P_ACT_DYN(end+1, 1) = mean(P_ACT_DYN);
+P_REJ_DYN(end+1, 1) = mean(P_REJ_DYN);
+P_ACT_DYN_TEST(end+1, 1) = mean(P_ACT_DYN_TEST);
+P_REJ_DYN_TEST(end+1, 1) = mean(P_REJ_DYN_TEST);
+ALPHA_DYN(end+1, 1) = mean(ALPHA_DYN);
+BETA_DYN(end+1, 1) = mean(BETA_DYN);
+AMP_DYN(end+1, 1) = mean(AMP_DYN);
+W_DYN(end+1, 1) = mean(W_DYN);
+T_BH_DYN(end+1, 1) = mean(T_BH_DYN);
+T_BF_DYN(end+1, 1) = mean(T_BF_DYN);
 
-for i=1:length(patients)
-    patient = patients{i}.name;
-    load(strcat(classifiers_fold_root, patient, '_off_tuning_ev_acc'))
-    
-    patients_exp_performances_offline_tuning_train(i, :) = [perf_active_ex, perf_resting_ex, perf_active_rej_ex];
-    
-    patients_dyn_performances_offline_tuning_train(i, :) = [perf_active_dyn, perf_resting_dyn, perf_active_rej_dyn];
-    
-    patients_mov_performances_offline_tuning_train(i, :) = [perf_active_mov, perf_resting_mov, perf_active_rej_mov];
-end
+T = table(NAMES, SSA, SSA_BF, SSA_BH);
+T_MOV = table(NAMES,P_ACT_MOV,P_REJ_MOV,P_ACT_MOV_TEST,P_REJ_MOV_TEST,ALPHA_MOV,T_BH_MOV,T_BF_MOV);
+T_EXP = table(NAMES,P_ACT_EXP,P_REJ_EXP,P_ACT_EXP_TEST,P_REJ_EXP_TEST,ALPHA_EXP,T_BH_EXP,T_BF_EXP);
+T_DYN = table(NAMES,P_ACT_DYN,P_REJ_DYN,P_ACT_DYN_TEST,P_REJ_DYN_TEST,ALPHA_DYN,BETA_DYN,AMP_DYN,W_DYN,T_BH_DYN,T_BF_DYN);
 
-writematrix(patients_exp_performances_offline_tuning_train, out_filename, 'Sheet',1, 'Range', 'F2');
-writematrix(patients_dyn_performances_offline_tuning_train, out_filename, 'Sheet',1, 'Range', 'J2');
-writematrix(patients_mov_performances_offline_tuning_train, out_filename, 'Sheet',1, 'Range', 'N2');
+writetable(table({'Single Sample'}), out_filename, 'Sheet', 1, 'Range', 'A1');
+writetable(T, out_filename, 'Sheet', 1, 'Range', 'A2');
 
-patients_exp_performances_offline_tuning_train_avg = mean(patients_exp_performances_offline_tuning_train);
-writematrix(patients_exp_performances_offline_tuning_train_avg, out_filename, 'Sheet',1, 'Range', 'F10');
+writetable(table({'Moving Average'}), out_filename, 'Sheet', 2, 'Range', 'A1');
+writetable(T_MOV, out_filename, 'Sheet', 2, 'Range', 'A2');
 
-patients_dyn_performances_offline_tuning_train_avg = mean(patients_dyn_performances_offline_tuning_train);
-writematrix(patients_dyn_performances_offline_tuning_train_avg, out_filename, 'Sheet',1, 'Range', 'J10');
+writetable(table({'Exponential Smoothing'}), out_filename, 'Sheet', 3, 'Range', 'A1');
+writetable(T_EXP, out_filename, 'Sheet', 3, 'Range', 'A2');
 
-patients_mov_performances_offline_tuning_train_avg = mean(patients_mov_performances_offline_tuning_train);
-writematrix(patients_mov_performances_offline_tuning_train_avg, out_filename, 'Sheet',1, 'Range', 'N10');
-
+writetable(table({'Dynamic Force'}), out_filename, 'Sheet', 4, 'Range', 'A1');
+writetable(T_DYN, out_filename, 'Sheet', 4, 'Range', 'A2');
 
 
 
