@@ -1,31 +1,35 @@
-function [perf_active, perf_resting, perf_active_rej] = evaluate_accumulation(up_threshold, down_threshold, true_class, accumulator, feedback_index_scaled, trial_label_scaled)
-% [perf_active, perf_resting, perf_active_rej] = evaluate_accumulation(up_threshold, down_threshold, true_class, accumulator, feedback_index_scaled, trial_label_scaled)
+function [perf_active, perf_resting, perf_active_rej] = evaluate_accumulation(up_threshold, down_threshold, true_class, accumulator, feedback_index, trial_label)
+% [perf_active, perf_resting, perf_active_rej] = evaluate_accumulation(up_threshold, down_threshold, true_class, accumulator, feedback_index, trial_label)
 %
 % The function evaluates the performance of the evidence accumulation framework
 %
 % Input arguments:
-%   - up_threshold   
-%   - down_threshold   
-%   - true_class   
-%   - accumulator   
-%   - feedback_index_scaled
-%   - trial_label_scaled
+%   - up_threshold              upper limit over which the trial is
+%   considered of the first class
+%   - down_threshold            lover limit under which the trial is
+%   considered of the second class
+%   - true_class                the true label for each trial
+%   - accumulator               the data from the evidence accumulation framework
+%   - feedback_index            logic index for selectin only the feedback
+%   part of the trial
+%   - trial_label               labels that assign the right trial number to each
+%   sample in the cue-feedback period of the trial
 %
 % Output arguments:
-%   - perf_active               the performance on right classification of the active task
-%   - perf_resting              the performance on right classification of the resting task
-%   - perf_active_rej           the performance on not classify as rest an active task
+%   - perf_active               the performance on classification of the active task
+%   - perf_resting              the performance on classification of the resting task
+%   - perf_active_rej           the performance on classification of not classified as rest task
 
 
 % name for the trials
-trial_names = nonzeros(unique(trial_label_scaled));
+trial_names = nonzeros(unique(trial_label));
 predicted_class = nan(size(trial_names));
 
 for trial_i = 1:length(trial_names)
     % name of this trial
     this_trial = trial_names(trial_i);
     % index for extracting only the feedback data in this trial
-    this_trial_feedback_index = feedback_index_scaled & (trial_label_scaled==this_trial);
+    this_trial_feedback_index = feedback_index & (trial_label==this_trial);
     % evidences accumulated for this trial
     trial_accumulation = accumulator(this_trial_feedback_index);
     

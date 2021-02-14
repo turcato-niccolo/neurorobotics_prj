@@ -1,16 +1,16 @@
 function [PSD_concatenated, EVENT_concatenated, run_k] = concatenatePSD(PSD_data)
-% [EVENT_concatenated, run_labels, modality_labels, PSD_concatenated, sample_rate, freqs] = concatenatePSD(PSD_data)
+% [PSD_concatenated, EVENT_concatenated, run_k] = concatenatePSD(PSD_data)
 %
 % The function returns the concatenation of all psd passed in input.
 %
 % Input arguments:
 %   - PSD_data              cell array with data structure of the psd
 %   inside [windows x frequences x channels]
-%   data structure accepred [EVENT.(POS,TYP,DUR), frequences, modality, sample_rate, PSD]
+%   data structure accepred [EVENT.(POS, TYP, DUR), frequences, sample_rate, PSD]
 %
 % Output arguments:
 %   - PSD_concatenated      matrix concatenation of all PSD
-%   - EVENT_concatenated    EVENT structure containing (POS, DUR, TYP, MOD) info about all
+%   - EVENT_concatenated    EVENT structure containing (POS, TYP, DUR) info about all
 %   events in the concatenated PSD
 %   - run_k                 assigns a label with the run index to all
 %   windows of the concatenated PSD

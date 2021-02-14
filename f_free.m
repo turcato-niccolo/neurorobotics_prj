@@ -4,10 +4,14 @@ function [y] = f_free(x, conservative_amp, w)
 % The function returns the value of the free force function on the state x
 %
 % Input arguments:
-%   - y         the value of the free force function on the state x
+%   - x                 the state
+%   - conservative_amp  the amplitude of the wave
+%   - w                 the portion in both direction around 0.5 that is considered to mantain
+%   stationary
 %
 % Output arguments:
-%   - x         the state
+%   - y                 the value of the free force function on the state x
+
     if (x < 0.5 - w)
         y = -sin(pi .* x ./ (0.5-w));
     elseif (x > 0.5 + w)
