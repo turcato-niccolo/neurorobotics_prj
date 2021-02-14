@@ -1,5 +1,5 @@
-function [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feedback_starts, alpha, beta, free_force, bmi_force)
-% [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feedback_starts, alpha, beta, free_force, bmi_force)
+function [accumulator] = dynamic_smoothing(post_probabilities, feedback_starts, alpha, beta, free_force, bmi_force)
+% [accumulator] = dynamic_smoothing(post_probabilities, feedback_starts, alpha, beta, free_force, bmi_force)
 %
 %   The function returns the smoothed posterior probabilities with respect
 %   to the dynamical smoothing algorithm
@@ -13,8 +13,7 @@ function [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feed
 %
 % Input arguments:
 %   -post_probabilities [samples x num_classes] post probabilities of the
-%   class from the classifier
-% 	-num_classes        number of classes
+%   classes from the classifier
 % 	-feedback_starts    [num_feedback x 1]: associates each sample to
 %  	a trial, contains   starting time of each trial
 %  	-alpha              smoothing value of the algorithm
@@ -30,8 +29,8 @@ function [accumulator] = dynamic_smoothing(post_probabilities, num_classes, feed
   
 
     num_samples = length(post_probabilities);
-    %reset accumulation to the base probability of this class = 1/num_classes
-    reset_accumulation = 1./num_classes;
+    %reset accumulation to the base probability of this class = 1/2
+    reset_accumulation = 1./2;
     %contains the accumulation evidence for the sample_i of the training set
     accumulator = nan(num_samples, 1);
     
