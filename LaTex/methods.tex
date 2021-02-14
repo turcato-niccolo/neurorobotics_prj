@@ -26,10 +26,10 @@ Before applying the actual PSD procedure, the EEG data is first transformed into
 	 \label{fig:laplacian_filter}
 \end{figure}
 
-After this we have split the data into the offline part used to train an tuning and the online part used as test.\\ \\
+After this we splitted the data into the offline part used to train an tuning and the online part used as test.\\ \\
 {\Large \textbf{Offline task:}}
 \begin{itemize}
-\item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the more discriminant features are selected, each feature corresponds to a (frequency , channel) pair. In this step, we take into account only if the pairs that are meaningful for MI tasks that are the beta
+\item \textbf{Feature selection:}  For each patient, from the data in form of PSD, then the more discriminant features are selected, each feature corresponds to a (frequency, channel) pair. In this step, we take into account only if the pairs that are meaningful for MI tasks that are the beta
 \footnote{for beta rhythm we mean the activity of populations of neurons in the motor-cortex region(also frontal region but is not related to motor-imagery tasks) approximately with frequencies 13-30 (can slightly change from subject to subject)}
  and mu
  \footnote{for mu rhythm we mean the activity of populations of neurons in the motor-cortex region approximately with frequencies 8-13 (can slightly change from subject to subject)}
@@ -42,10 +42,12 @@ In other words:
  in the beta band for the ERS 
  \footnote{for ERS -event related synchronization- we mean when some populations of neurons after an ERD starts to re-synchronize their firing rate causing an increment in power of the EEG signal in that area}
 \end{itemize}
-In order to correctly select the more discriminant features we have first normalized the distribution of the samples with respect to the two features we are interested in, applying a logarithmic transformation to the PSD matrix (Figure \ref{fig:freq_data_norm}).
+In order to correctly select the most discriminant features we have first normalized the distribution of the samples with respect to the two features we are interested in, applying a logarithmic transformation to the PSD matrix (Figure \ref{fig:freq_data_norm}).
 Then we computed the Fisher's score (Figure \ref{fig:fisher_score_calibration_ai6}, Figure \ref{fig:fisher_score_avg_filtered_ai6}) and for removing features that from the literature we know are not related to the tasks, we have applied weights (Figure \ref{fig:features_filter}) to them and then selected the best k (Figure \ref{fig:features_selection}).
 
-\textbf{TODO: Justify number of features.}
+\textbf{Choice of k:} We ran a version of subset selection \footnote{Insert Subset selection reference} to choose the optimal number of features for the patients. We used offline data only, so that the results on the online data are as close as possible to a reasonable estimation of the true error of our classifiers, choice of k was in the range [1, 10]. For each patient, we divided the (offline) data in train and validation set (ratios $\frac{2}{3}, \frac{1}{3}$), obtaining the optimal number of features as well as the accuracy on validation data. \\
+Then we had to choose if using foreach patient different number of features based on the results obtained as described, or choose k that would be applied to all patients. We went for the second option, as we felt that the tradeoff between optimality and complexity was more reasonable. \\
+We computed a weighted average over the patients' results (with the best accuracy as weight) found that about 4 features is probably close to a global optimal number of features for our patients' data.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -86,7 +88,7 @@ Then we computed the Fisher's score (Figure \ref{fig:fisher_score_calibration_ai
 
 
 
-\item \textbf{Classifier training:} The previous steps allow to build a training set for each subject (one can use all the available offline data), by selecting the windows associated with the MI tasks. Then for each subject we applied k-fold cross validation to choose between three differ kind of classificators (LDA, QDA, SVM with rbf kernel).\\
+\item \textbf{Classifier training:} The previous steps allow to build a training set for each subject (one can use all the available offline data), by selecting the windows associated with the MI tasks. Then for each subject we applied k-fold cross validation to choose between three differ kind of classificators (LDA, QDA, SVM with rbf kernel). (Figure \ref{fig:cv_ai6})\\
 
 \begin{figure}[h!]
 	\begin{center}
@@ -125,7 +127,20 @@ Then we computed the Fisher's score (Figure \ref{fig:fisher_score_calibration_ai
 
 
 At the end of this step, for each subject we have a trained classifier, that takes in input the selected features from a window of the PSD, and returns in output the label of the MI task that it recognizes. \\
-\item \textbf{Evidence accumulation tuning:} We also use offline data for tuning the parameters of the evidence accumulation frameworks that is used to obtain better classification at trial level. 
+\item \textbf{Evidence accumulation tuning:} We implemented 3 evidence accumulation frameworks, based on different smoothing functions:
+	\begin{itemize}
+		\item Exponential smoothing: $\Delta_{y_t} = \alpha  (x_t - y_{t-1})$, $y_t = \alpha x_t +(1 - \alpha) y_{t-1}$
+		\item Dynamic smoothing: $\Delta_{y_t} = \beta  (\alpha F_{free}(y_{t-1}) + (1 - \alpha) F_{bmi}(x_t))$, $y_t = y_{t-1} + \Delta_{y_t}$
+		\item Moving average smoothing: $y_t = \alpha x_t +(1 - \alpha) \frac{\Sigma_{i=1}^{t-1}(y_i) + x_t}{t} $
+
+	\end{itemize}
+The last one serves more as a reference for the other two. \\
+For each framework we performed parameters' tuning using a genetic algorithm \footnote{Global optimization toolbox (Matlab)}. We performed two different tunings:
+	\begin{itemize}
+		\item First tuning on the whole offline data, that is then tested on the online data
+		\item Second tuning on the first run of online data, that is then tested on the rest of online data
+	\end{itemize}
+Results are avalaialble in section \ref{sec:results}.
 \end{itemize}
 
 \noindent
@@ -157,6 +172,6 @@ At the end of this step, for each subject we have a trained classifier, that tak
 \end{figure}
 
 At last, we can evaluate the performance of the system with single-sample accuracy.
-\item \textbf{Evidence accumulation test:} Then we use the evidence accumulation frameworks (with the parameters found in offline data for the subject) over the predictions of the classifier.\\
+\item \textbf{Evidence accumulation test:} Then we used the evidence accumulation frameworks (with the parameters found in the tuning sessions for the subject) over the predictions of the classifier.\\
 At the end we evaluate the performance on the continuos feedback period in order to obtain a trial level accuracy.
 \end{itemize}
